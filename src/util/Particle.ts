@@ -48,7 +48,7 @@ class Particle {
 
   move() {
     if (this.isStop) return;
-
+    // 计算和校对当前的速度
     correctSpeed(this.speed);
     this.currentPoint.x += this.speed.vx;
     this.currentPoint.y += this.speed.vy;

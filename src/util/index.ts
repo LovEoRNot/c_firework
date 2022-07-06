@@ -9,7 +9,7 @@ export default function init(
 ) {
   if (!context) {
     context = new Context(canvas, config);
-    context.update();
+    context.start();
   }
   context.updateCanvas(config);
 }

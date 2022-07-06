@@ -35,13 +35,14 @@ class Spark extends Particle {
     ctx.fill();
   }
 
-  checkOutOfBounds() {
+  checkInvisible() {
     const { x, y } = this.currentPoint;
     const {
       position: { x: startPointX, y: startPointY },
       width,
       height,
     } = this.container;
+    // 位移出容器外
     if (
       x <= startPointX - this.radius ||
       y <= startPointY + this.radius ||
@@ -51,13 +52,14 @@ class Spark extends Particle {
       return true;
     }
 
+    // 超过停留的帧数
     if (this.currentFrame > this.stayFrame) return true;
 
     return false;
   }
 
   checkPosition(): void {
-    this.isStop = this.checkOutOfBounds();
+    this.isStop = this.checkInvisible();
   }
 
   update() {

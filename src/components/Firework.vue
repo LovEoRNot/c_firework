@@ -3,9 +3,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 
-import initCanvas from "../util";
+import initCanvas, { context } from "../util";
+import { spawnFirework } from "../util/render";
 
 interface Props {
   width?: number; // canvas width
@@ -22,5 +23,13 @@ const canvasRef = ref<HTMLCanvasElement>();
 // watch the change of width and height to change the canvas instantly
 watch([() => props.width, () => props.height], ([width, height]) => {
   initCanvas(canvasRef.value!, { width, height });
+});
+
+onMounted(() => {
+  window.addEventListener("click", spawnFirework);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener("click", spawnFirework);
+  context.stop();
 });
 </script>

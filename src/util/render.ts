@@ -1,14 +1,19 @@
+import getConfig from "../config";
 import FireWork from "./FireWork";
-import Spark from "./Spark";
+import { IPoint } from "./type";
 
-let sparks: Spark[] = [];
+let fireworks: FireWork[] = [];
+
+export function spawnFirework(point?: IPoint) {
+  fireworks.push(new FireWork(point));
+}
 
 export default function render() {
-  if (sparks.length < 20) {
-    sparks.push(new FireWork());
+  if (fireworks.length < getConfig().maxCount) {
+    spawnFirework();
   }
 
-  sparks.forEach(s => s.update())
+  fireworks.forEach((s) => s.update());
 
-  sparks = sparks.filter(s => !s.isStop);
+  fireworks = fireworks.filter((s) => !s.isStop);
 }

@@ -1,13 +1,16 @@
 import render from "./render";
 import { iContextConfig, SpeedContext } from "./type";
 
+let now: number;
+
 export default class Context {
   canvasWidth = 0;
   canvasHeight = 0;
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
   speedContext: SpeedContext;
-  gravity = 0;
+  fps = 60; // 刷新率
+  frame = 0; // 统计当前的刷新率
 
   raf?: number;
 
@@ -18,16 +21,13 @@ export default class Context {
     this.speedContext = {
       h_revert: false,
       v_revert: true,
-    }
-    this.gravity = 0.01
+    };
+
+    now = Date.now();
   }
 
   changeSpeedContext(speedContext: SpeedContext) {
     this.speedContext = speedContext;
-  }
-
-  changeGravity(gravity: number) {
-    this.gravity = gravity;
   }
 
   updateCanvas({ width, height }: iContextConfig) {
@@ -41,16 +41,43 @@ export default class Context {
     return this.context;
   }
 
+  stop = () => {
+    this.raf && cancelAnimationFrame(this.raf);
+  };
+
+  start = () => {
+    this.update();
+  };
+
   update = () => {
+    if (!this.context) return;
+
+    this.getFPS();
     this.drawContainer();
+    this.showFPS();
     render();
     this.raf = requestAnimationFrame(this.update);
   };
 
+  // 简单计算一下当前屏幕的刷新率，因为烟花的持续时间需要通过这个来计算
+  getFPS = () => {
+    this.frame++;
+    if (Date.now() - now > 1000) {
+      this.fps = this.frame;
+      this.frame = 0;
+      now = Date.now();
+    }
+  };
+
+  showFPS = () => {
+    this.context.font = "16px sans-serif";
+    this.context.fillStyle = "#fff";
+    this.context.fillText(`fps: ${this.fps}`, 20, 30, 100);
+  };
+
   drawContainer = () => {
-    // this.context.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.context.fillStyle = "rgba(0,0,0,0.2)";
     this.context.rect(0, 0, this.canvasWidth, this.canvasHeight);
     this.context.fill();
-  }
+  };
 }
