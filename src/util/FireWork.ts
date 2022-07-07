@@ -30,7 +30,7 @@ export default class FireWork extends Spark {
       y: canvasHeight - radius - 2,
     };
     const speed: ISpeed = {
-      vx: randomNumber(-1, 1),
+      vx: randomNumber(-0.5, 0.5, 2),
       vy: randomNumber(speedRange[0], speedRange[1], 1),
       ax: 0,
       ay: gravity,
@@ -41,7 +41,7 @@ export default class FireWork extends Spark {
     super(startPoint, speed, container, radius, color);
     this.startPoint = startPoint;
     this.container = container;
-    this.willBomb = Math.random() > 0.5;
+    this.willBomb = Math.random() > 0.3;
   }
 
   initSparks() {
@@ -52,7 +52,7 @@ export default class FireWork extends Spark {
     } = getConfig();
     const { vy } = this.originSpeed;
     const length = randomNumber(sizeRange[0], sizeRange[1]);
-    const frameBasic = -context.fps / 6;
+    const frameBasic = -context.fps / 4;
 
     // 生成若干个火花
     for (let i = 0; i < length; i++) {

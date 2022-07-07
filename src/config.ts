@@ -1,15 +1,15 @@
 import { context } from "./util";
 
 const config = {
-  gravity: 0.03,
+  gravity: 0.01,
   maxCount: 30, // 同屏最大的烟花数量
   firework: {
     radiusRange: [1, 3], // 发射杆半径
-    speedRange: [-1, -7], // 发射杆速度
+    speedRange: [-1, -5], // 发射杆速度
   },
   spark: {
     radiusRange: [1, 3], // 火花半径
-    maxSpeed: -3, // 火花最大速度
+    maxSpeed: -4, // 火花最大速度
     sizeRange: [10, 200], // 火花数量
   },
 };

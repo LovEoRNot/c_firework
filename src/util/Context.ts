@@ -52,10 +52,10 @@ export default class Context {
   update = () => {
     if (!this.context) return;
 
-    this.getFPS();
     this.drawContainer();
     this.showFPS();
     render();
+    this.getFPS();
     this.raf = requestAnimationFrame(this.update);
   };
 
@@ -76,7 +76,7 @@ export default class Context {
   };
 
   drawContainer = () => {
-    this.context.fillStyle = "rgba(0,0,0,0.2)";
+    this.context.fillStyle = "rgba(0,0,0,0.1)";
     this.context.rect(0, 0, this.canvasWidth, this.canvasHeight);
     this.context.fill();
   };
