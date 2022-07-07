@@ -5,7 +5,7 @@ import eslintPlugin from "vite-plugin-eslint";
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    outDir: "./",
+    outDir: "docs",
   },
   base: `/c_firework`,
   plugins: [
